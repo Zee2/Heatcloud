@@ -5,10 +5,10 @@ Heatcloud is a tool that allows traditional business know-how, customer engageme
 
 
 ## Usage
-	Run Heatcloud and let your users explore the environment. See the 3D voxel cloud populate with gaze telemetry; save and restore your work to the Azure cloud.
+Run Heatcloud and let your users explore the environment. See the 3D voxel cloud populate with gaze telemetry; save and restore your work to the Azure cloud.
 	
 ## Build/Installation Instructions
-	This repository works with Unity 2017.3f and the UWP publishing workflow. Open in Unity 2017.3f and build to UWP/Mixed Reality.
+This repository works with Unity 2017.3f and the UWP publishing workflow. Open in Unity 2017.3f and build to UWP/Mixed Reality.
 ## Contributor Guide
 
 See CONTRIBUTING.MD
