@@ -1,31 +1,15 @@
 # Contibuting to Heatcloud
 
-## Welcome contributors to the project: 
+## Welcome!
+
+Please use Unity 2017.3f, Microsoft Visual Studio with UWP and .NET publishing tools, and Windows Mixed Reality to help out with this project.
 
 ## Short Links to Important Resources:
-* docs: handbook / roadmap (you'll learn more about this in the roadmapping session)
-* bugs: issue tracker / bug report tool
-* communcations: comment on the project (https://devpost.com/software/heat-cloud) or email us (kate-anderson@uiowa.edu/finnnorth@gmail.com) 
-## Testing
-## Development environment details
 
-## How to submit changes: Pull Request protocol etc. 
-_What people might expect in a response from the core devs_ 
+* https://developer.microsoft.com/en-us/windows/mixed-reality/install_the_tools
+* https://developer.microsoft.com/en-us/windows/mixed-reality
+* https://github.com/Microsoft/MixedRealityToolkit-Unity
+
 
 ## How to report a bug: 
-* Templates: 
-  * _What to include in a bug report_
-* First bugs for Contributors
-  * _What would be good bugs to start with?_
-    
-## New Feature Requirements
-_Any guidelines for proposing the feature_
-
-## Style Guide / Coding conventions 
-
-## Code of Conduct
-
-## Recognition model
-_How will contributors be recognized?_
-
-## Where can I ask for help?
+* Please use Github issues.
