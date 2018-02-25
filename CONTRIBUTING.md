@@ -1,4 +1,4 @@
-#Contibuting to Heatcloud
+# Contibuting to Heatcloud
 
 ## Welcome contributors to the project: 
 
