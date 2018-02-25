@@ -10,6 +10,6 @@ LinkedIn: https://www.linkedin.com/in/finn-sinclair-286462133/
 I worked with Unity 2017 and Windows Mixed Reality to implement our voxel algorithm and the client side of the Azure storage system. Using the new Visual Studio Code I was able to rapidly prototype and develop new features for the product.
 	 
 ## Mentors
- * Sarah Sexton ([@sarahsexton](https://github.com/sarahse))
+ * Sarah Sexton ([@sarahsexton](https://github.com/sarahsexton))
  * David Washington ([@dwcares](https://github.com/dwcares))
  * Ben Russell ([@benrr101](https://github.com/benrr101))
