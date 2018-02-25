@@ -19,7 +19,7 @@ public class Raymarcher : MonoBehaviour {
 		lastRayTime = Time.time;
 		RaycastHit hit;
 		if(Physics.Raycast(transform.position, transform.forward, out hit, 1000, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore)){
-			Debug.Log("Hit " + hit.point);
+			//Debug.Log("Hit " + hit.point);
 			Raymarch(transform.position, hit.point - transform.position);
 		}
 
@@ -31,7 +31,7 @@ public class Raymarcher : MonoBehaviour {
 			int xIndex = Mathf.RoundToInt(((start + vec.normalized * x).x + (voxelSystem.dimension/2)*voxelSystem.voxelSize) / voxelSystem.voxelSize);
 			int yIndex = Mathf.RoundToInt(((start + vec.normalized * x).y + (voxelSystem.dimension/2)*voxelSystem.voxelSize) / voxelSystem.voxelSize);
 			int zIndex = Mathf.RoundToInt(((start + vec.normalized * x).z + (voxelSystem.dimension/2)*voxelSystem.voxelSize) / voxelSystem.voxelSize);
-			Debug.Log("voxels: " + xIndex + ", " + yIndex + ", " + zIndex);
+			//Debug.Log("voxels: " + xIndex + ", " + yIndex + ", " + zIndex);
 			voxelSystem.HitVoxel(xIndex, yIndex, zIndex);
 		}
 	}

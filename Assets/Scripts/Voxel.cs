@@ -13,6 +13,7 @@ public class Voxel : MonoBehaviour {
 	void Awake () {
 		meshRenderer = gameObject.GetComponent<MeshRenderer>();
 		thisMaterial = meshRenderer.material;
+		UpdateVoxel();
 	}
 	
 	public void UpdateVoxel () {
