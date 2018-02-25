@@ -1,5 +1,3 @@
-![Logo][Heatcloud.png]
-
 
 # Heatcloud
 ## HackIllinois 2018: Customer Engagement in 3D Heatmaps
