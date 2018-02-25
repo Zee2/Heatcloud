@@ -6,6 +6,7 @@ public class Raymarcher : MonoBehaviour {
 	public float interval;
 	public VoxelManager voxelSystem;
 	float lastRayTime = 0;
+	public bool isTakingData = false;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,7 +14,7 @@ public class Raymarcher : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Time.time - lastRayTime < interval)
+		if(Time.time - lastRayTime < interval || isTakingData == false)
 			return;	
 
 		lastRayTime = Time.time;
@@ -21,10 +22,15 @@ public class Raymarcher : MonoBehaviour {
 		if(Physics.Raycast(transform.position, transform.forward, out hit, 1000, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore)){
 			//Debug.Log("Hit " + hit.point);
 			Raymarch(transform.position, hit.point - transform.position);
-		}
+		}	
+	}
 
-		
-	}	
+	public void EnableCollection(){
+		isTakingData = true;
+	}
+	public void DisableCollection(){
+		isTakingData = false;
+	}
 
 	void Raymarch(Vector3 start, Vector3 vec){
 		for(float x = 0; x < vec.magnitude; x += 0.5f){

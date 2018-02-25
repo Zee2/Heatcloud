@@ -11,13 +11,18 @@ using UnityEngine.SceneManagement;
 using RESTClient;
 using Azure.StorageServices;
 
+using System.Linq;
+
 public class VoxelManager : MonoBehaviour {
+	public ToggleGroup slotToggles;
 	public Text pointsText; 
 	public Text statusText;
+	public Text initText;
+	public GameObject initWindow;
 	public string storageAccount;
 	public string accessKey;
 	public string container;
-	public string filename;
+	public string filenameSuffix;
 
 	public int dimension = 20;
 	public float voxelSize = 2;
@@ -25,6 +30,8 @@ public class VoxelManager : MonoBehaviour {
 	public GameObject voxelPrefab;
 
 	public int points = 0;
+
+	public bool isInitialized = false;
 
 	private StorageServiceClient client;
 	private BlobService blobService;
@@ -41,24 +48,42 @@ public class VoxelManager : MonoBehaviour {
 		
 		voxels = new Voxel[dimension,dimension,dimension];
 
+		StartCoroutine(VoxelInit());
+		StartCoroutine(UpdateVoxels());
+	}
+
+
+	IEnumerator VoxelInit(){
+		int count = 0;
 		for(int x = 0; x < dimension; x++){
 			for(int y = 0; y < dimension; y++){
 				for(int z = 0; z < dimension; z++){
 					Vector3 pos = new Vector3((x - (dimension/2)) * voxelSize, (y - (dimension/2)) * voxelSize, (z - (dimension/2)) * voxelSize);
 					voxels[x,y,z] = Instantiate(voxelPrefab, pos, Quaternion.identity).GetComponent<Voxel>();
 					voxels[x,y,z].transform.localScale = Vector3.one * voxelSize;
+					count++;
+					
 				}
+				
 			}
-
+			initText.text = "Please wait, dynamically initializing " + count + " voxels";
+			yield return new WaitForEndOfFrame();
 		}
-		StartCoroutine(UpdateVoxels());
+		isInitialized = true;
+		initText.text = "System ready.";
+		yield return new WaitForSeconds(1);
+		initWindow.SetActive(false);
 	}
 
 	IEnumerator UpdateVoxels(){
+
 		while(true){
 			for(int x = 0; x < dimension; x++){
 				for(int y = 0; y < dimension; y++){
 					for(int z = 0; z < dimension; z++){
+						if(!isInitialized){
+							continue;
+						}
 						voxels[x,y,z].UpdateVoxel();
 					}
 					
@@ -70,6 +95,9 @@ public class VoxelManager : MonoBehaviour {
 	}
 
 	public void HitVoxel(int x, int y, int z){
+		if(!isInitialized){
+			return;
+		}
 		try{
 			voxels[x,y,z].value += 0.002f;
 			voxels[x,y,z].UpdateVoxel();
@@ -80,12 +108,20 @@ public class VoxelManager : MonoBehaviour {
 		
 	}
 
+	public string GetResourcePath(){
+		return container + "/" + filenameSuffix + slotToggles.ActiveToggles().FirstOrDefault().name + ".txt";
+	}
+
 	public void TriggerSave(){
 		StartCoroutine(SaveVoxelData());
 	}
 
 	
 	public IEnumerator SaveVoxelData(){
+		if(!isInitialized){
+			statusText.text = "Voxel system is not initialized";
+			yield break;
+		}
 		bool isFirst = true;
 
 		using(MemoryStream mStream = new MemoryStream()){
@@ -104,15 +140,19 @@ public class VoxelManager : MonoBehaviour {
 				statusText.text = "Processing voxel CSV, please wait";
 				yield return new WaitForEndOfFrame();
 			}
-			StartCoroutine(blobService.PutTextBlob(PutTextBlobComplete, Encoding.ASCII.GetString(mStream.ToArray()), container, filename));
+			StartCoroutine(blobService.PutTextBlob(PutTextBlobComplete, Encoding.ASCII.GetString(mStream.ToArray()), container, GetResourcePath()));
 		}
 		
 	}
 
 	public void LoadVoxelData(){
+		if(!isInitialized){
+			statusText.text = "Voxel system is not initialized";
+			return;
+		}
 		statusText.text = "Loading voxel data from Azure...";
-		string resourcePath = container + "/" + filename;
-    	StartCoroutine(blobService.GetTextBlob(GetTextBlobComplete, resourcePath));
+		
+    	StartCoroutine(blobService.GetTextBlob(GetTextBlobComplete, GetResourcePath()));
 	}
 
 	private void PutTextBlobComplete(RestResponse response){
@@ -148,6 +188,7 @@ public class VoxelManager : MonoBehaviour {
 			statusText.text = "Processing voxel CSV, please wait";
 			yield return new WaitForEndOfFrame();
 		}
+		statusText.text = "Done!";
 	}
 
 	void Update(){
